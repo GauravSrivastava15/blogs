@@ -11,8 +11,8 @@ const __dirnames = path.resolve()
 // mongodb connect
 connectDB();
 
-app.listen(process.env.PORT, () => {
-  console.log(`server is running on localhost ${process.env.PORT}`);
+app.listen(5000, () => {
+  console.log(`server is running on localhost 5000`);
 });
 
 app.use(express.static(path.join(__dirnames, '/frontend/build')))
