@@ -7,7 +7,7 @@ const blogSchema = new mongoose.Schema({
   description: {
     type: String,
     required: [true, "please enter blog description"],
-    minLength: [10, "description min length should be 10"],
+    
   },
   image: String,
   created: {
