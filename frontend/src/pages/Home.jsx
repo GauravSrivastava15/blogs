@@ -29,8 +29,9 @@ const Home = () => {
     <>
       {loading && <LinearProgress color="inherit" />}
       <Hero />
+      
       <div className="blogs min-h-[283px] flex flex-col items-center justify-center bg-zinc-900 gap-3 p-5">
-        {console.log("HOme is res", blogs)}
+        {/* {console.log("HOme is res", blogs)} */}
         {blogs.map((blog) => {
           return (
             <Bcard

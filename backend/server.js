@@ -2,10 +2,11 @@ const app = require("./app");
 const dotenv = require("dotenv");
 const express = require('express')
 const connectDB = require("./config/db");
+const cors = require("cors")
 const path = require("path")
-// dotenv config
 dotenv.config();
 
+app.use(cors())
 const __dirnames = path.resolve()
 
 // mongodb connect

@@ -18,7 +18,7 @@ const BlogDetails = () => {
     const blogDetails = async () => {
       const res = await axios.get(`/api/codingninja/getblog/${id}`);
       setData(res.data);
-      console.log("Data is", res)
+      // console.log("Data is", res)
     };
     blogDetails();
   }, [edit]);
@@ -48,10 +48,16 @@ const BlogDetails = () => {
   };
 
   const handleChange = (e) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     let { name, value } = e.target;
     setUserInp({ ...userInp, [name]: value });
   };
+
+  const handeleImageChange = async (e) => {
+    const file = e.target.files[0]
+    const base64 = await convertToBase64(file)
+    setImage(base64)
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (data.title === "" || data.description === "") {
@@ -61,7 +67,7 @@ const BlogDetails = () => {
     formData.append("title", userInp.title); //append the values with key, value pair
     formData.append("description", userInp.description);
     formData.append("avatar", image);
-    console.log(formData);
+    // console.log("Form Data is",formData[0]);
     const config = {
       headers: { "content-type": "multipart/form-data" },
     };
@@ -71,7 +77,7 @@ const BlogDetails = () => {
         formData,
         config
       );
-      console.log(res.status);
+      // console.log(res.status);
       if (res.status === 201) {
         window.alert("updated");
         navigate(`/blog/${id}`);
@@ -80,9 +86,24 @@ const BlogDetails = () => {
         setEdit(false);
       }
     } catch (error) {
+      console.log("Error in update submit",error)
       window.alert(error);
     }
   };
+
+  function convertToBase64(file){
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        resolve(fileReader.result)
+      };
+      fileReader.onerror = (error) => {
+        reject(error)
+      }
+    })
+  }
+
   return (
     <>
       <div className="min-h-[92vh] blog flex-col md:flex-row flex p-5 bg-[#111216] overflow-hidden">
@@ -115,9 +136,7 @@ const BlogDetails = () => {
                 type="file"
                 placeholder="enter your new desc"
                 name="avatar"
-                onChange={(e) => {
-                  setImage(e.target.files[0]);
-                }}
+                onChange={(e) => handeleImageChange(e)}
               />
 
               <button
@@ -143,8 +162,8 @@ const BlogDetails = () => {
               <div className="img flex items-center justify-center h-1/2">
                 <img
                   className="rounded-md w-[400px]"
-                  src={`http://localhost:3000/uploads/${data.image}`}
-                  alt={data.image}
+                  src={data.image}
+                  alt="img"
                 />
               </div>{" "}
               <div className="right flex gap-2 flex-col items-center justify-center p-4 w-[70%]">

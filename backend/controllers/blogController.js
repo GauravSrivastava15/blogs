@@ -12,7 +12,8 @@ exports.getAllBlogs = async (req, res, next) => {
 };
 exports.createBlog = async (req, res, next) => {
   try {
-    const data = await Blog.create({ ...req.body, image: req.file.filename });
+    // console.log("Req data",req.body)
+    const data = await Blog.create({ ...req.body, image: req.body.avatar });
     res.status(201).json({ success: true, blog: data });
   } catch (error) {
     res.status(500).json({ success: false, msg: error.message });
@@ -25,9 +26,10 @@ exports.updateBlog = async (req, res, next) => {
     if (!blog) {
       return next(new ErrorHandler("blog not found", 404));
     }
+    console.log(req.body)
     const newData = await Blog.findOneAndUpdate(
       { _id },
-      { $set: { ...req.body, image: req.file.filename } },
+      { $set: { ...req.body, image: req.body.avatar } },
       { new: true }
     );
     res.status(201).send(newData);

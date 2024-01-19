@@ -5,15 +5,24 @@ const CreateBlog = () => {
   const navigate = useNavigate();
   const [data, setData] = useState({ title: "", description: "" });
   const [image, setImage] = useState("");
+
   const handleChange = (e) => {
     let { name, value } = e.target;
     setData({ ...data, [name]: value });
   };
+
+  const handeleImageChange = async (e) => {
+    const file = e.target.files[0]
+    const base64 = await convertToBase64(file)
+    setImage(base64)
+  }
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (data.title === "" || data.description === "") {
       window.alert("all input fields are required");
     }
+    console.log("Image is",image)
     let formData = new FormData();
     formData.append("title", data.title); //append the values with key, value pair
     formData.append("description", data.description);
@@ -39,6 +48,20 @@ const CreateBlog = () => {
       window.alert(error);
     }
   };
+
+  function convertToBase64(file){
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        resolve(fileReader.result)
+      };
+      fileReader.onerror = (error) => {
+        reject(error)
+      }
+    })
+  }
+
   return (
     <>
       <div className="min-h-[92vh] w-full  bg-[#111216]">
@@ -67,15 +90,15 @@ const CreateBlog = () => {
             id="file_input"
             type="file"
             name="avatar"
-            onChange={(e) => {
-              setImage(e.target.files[0]);
-            }}
+            
+            onChange={(e) => handeleImageChange(e)}
+            
           />
           <p
             className="mt-1 text-sm text-gray-500 dark:text-gray-300"
             id="file_input_help"
           >
-            Upload Blog Image : SVG, PNG, JPG.
+            Upload Blog Image : PNG, JPG.
           </p>
 
           <button
