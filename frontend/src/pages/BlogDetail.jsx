@@ -18,6 +18,7 @@ const BlogDetails = () => {
     const blogDetails = async () => {
       const res = await axios.get(`/api/codingninja/getblog/${id}`);
       setData(res.data);
+      console.log("Data is", res)
     };
     blogDetails();
   }, [edit]);

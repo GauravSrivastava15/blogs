@@ -1,6 +1,6 @@
 import React from "react";
 const Bcard = (props) => {
-  // console.log(props.img);
+  console.log("Image is ",props.img);
   return (
     <>
       <div className="card md:w-[70%] shadow-md hover:scale-105 duration-300 hover:shadow-blue-500/40 rounded-md p-4 bg-[#111216] flex flex-col md:flex-row items-center justify-center ">
