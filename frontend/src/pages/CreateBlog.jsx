@@ -24,7 +24,7 @@ const CreateBlog = () => {
     }
     console.log("Image is",image)
     let formData = new FormData();
-    formData.append("title", data.title); //append the values with key, value pair
+    formData.append("title", data.title); 
     formData.append("description", data.description);
     formData.append("avatar", image);
     // console.log(formData);
@@ -37,7 +37,7 @@ const CreateBlog = () => {
         formData,
         config
       );
-      // console.log(res.status);
+      
       if (res.status === 201) {
         window.alert("created");
         setData({ title: "", description: "" });
