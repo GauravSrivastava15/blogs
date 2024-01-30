@@ -1,18 +1,20 @@
 const mongoose = require("mongoose");
-const blogSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: [true, "please enter blog title"],
+const blogSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: [true, "please enter blog title"],
+    },
+    description: {
+      type: String,
+      required: [true, "please enter blog description"],
+    },
+    image: String,
+    created: {
+      type: String,
+      default: Date.now(),
+    },
   },
-  description: {
-    type: String,
-    required: [true, "please enter blog description"],
-    
-  },
-  image: String,
-  created: {
-    type: String,
-    default: Date.now(),
-  },
-});
+  { timestamps: true }
+);
 module.exports = new mongoose.model("Blog", blogSchema);
